@@ -69,6 +69,9 @@ tests:
       FirstNumber: 64.30
       SecondNumber: 2.71828
     asserts:
+      - equal:
+          path: data.subtracted
+          value: 62
   - it: should subtract the SecondNumber from the FirstNumber value and save the result in the data.subtracted path. For example, if FirstNumber is 7.5 and SecondNumber is 3, the result will be 2
     set:
       FirstNumber: 64.30

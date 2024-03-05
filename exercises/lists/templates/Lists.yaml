@@ -3,15 +3,38 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
 data:
-  echoedList: {{ .Values.TestList }}
-  echoedListRange: {{ .Values.TestList }}
-  firstItem:  {{ .Values.TestList }}
-  thirdItem: {{ .Values.TestList }}
-  uniqueList: {{ .Values.TestList }}
-  uniqueListLength:  {{ .Values.TestList }}
-  withoutHelm:  {{ .Values.TestList }}
-  sliceOneToThree: {{ .Values.TestList }}
-  goFirst: {{ .Values.TestList }}
-  httpLast: {{ .Values.TestList }}
-  doubledList: {{ .Values.TestList }}
+  echoedList:
+{{ toYaml .Values.TestList | indent 4 }}
+  echoedListRange:
+{{- range .Values.TestList }}
+    - {{ . }}
+{{- end }}
+  firstItem:
+{{ if eq (len .Values.TestList) 0 }}
+    Not Found
+{{ else }}
+    {{ first .Values.TestList }}
+{{ end }}
+
+  thirdItem:
+{{ if lt (len .Values.TestList) 3 }}
+    Not Found
+{{ else }}
+    {{ index .Values.TestList 2 }}
+{{ end }}
+
+  uniqueList:
+{{ uniq .Values.TestList | toYaml | indent 4 }}
+  uniqueListLength:  {{ uniq .Values.TestList | len }}
+  withoutHelm:
+{{ without .Values.TestList "helm" | toYaml | indent 4 }}
+  sliceOneToThree: {{ if lt (len .Values.TestList) 3 }}[]{{else}}
+{{ slice .Values.TestList 1 3 | toYaml | indent 4 }}
+{{ end }}
+  goFirst:
+{{ concat (list "go") .Values.TestList | toYaml | indent 4 }}
+  httpLast:
+{{ concat .Values.TestList (list "http") | toYaml | indent 4 }}
+  doubledList:
+{{ concat .Values.TestList .Values.TestList | toYaml | indent 4 }}
 

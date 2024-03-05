@@ -4,27 +4,27 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   # Arithmetic
-  added: {{ .Values.FirstNumber }}
-  subtracted: {{ .Values.FirstNumber }}
-  divided: {{ .Values.FirstNumber }}
-  multiplied: {{ .Values.FirstNumber }}
+  added: {{ add .Values.FirstNumber .Values.SecondNumber }}
+  subtracted: {{ sub .Values.FirstNumber .Values.SecondNumber }}
+  divided: {{ div .Values.FirstNumber .Values.SecondNumber }}
+  multiplied: {{ mul .Values.FirstNumber .Values.SecondNumber }}
 
   # Comparisons
-  greaterThan: {{ .Values.FirstNumber }}
-  lessThan: {{ .Values.FirstNumber }}
-  greaterThanEqualTo: {{ .Values.FirstNumber }}
-  lessThanOrEqualTo: {{ .Values.FirstNumber }}
-  equals: {{ .Values.FirstNumber }}
-  notEquals: {{ .Values.FirstNumber }}
+  greaterThan: {{ gt .Values.FirstNumber .Values.SecondNumber }}
+  lessThan: {{ lt .Values.FirstNumber .Values.SecondNumber }}
+  greaterThanEqualTo: {{ ge .Values.FirstNumber .Values.SecondNumber }}
+  lessThanOrEqualTo: {{ le .Values.FirstNumber .Values.SecondNumber }}
+  equals: {{ eq .Values.FirstNumber .Values.SecondNumber }}
+  notEquals: {{ ne .Values.FirstNumber .Values.SecondNumber }}
 
   # Modulo
-  modded: {{ .Values.FirstNumber }}
+  modded: {{ mod .Values.FirstNumber .Values.SecondNumber }}
 
   # Rounding
-  rounded: {{ .Values.FirstNumber }}
+  rounded: {{ round .Values.FirstNumber 0 }}
 
   # Round to 3 decimal places
-  roundedThreePlaces: {{ .Values.FirstNumber }}
-  floored: {{ .Values.FirstNumber }}
-  ceiled: {{ .Values.FirstNumber }}
-  ceilingAdded: {{ .Values.FirstNumber }}
+  roundedThreePlaces: {{ round .Values.FirstNumber 3 }}
+  floored: {{ floor .Values.FirstNumber }}
+  ceiled: {{ ceil .Values.FirstNumber }}
+  ceilingAdded: {{ add (ceil .Values.FirstNumber) (ceil .Values.SecondNumber) }}
